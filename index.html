@@ -2,27 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Worker Database Viewer</title>
+  <title>Worker Verification Portal</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h2>Worker / Contractor Database</h2>
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <h1>Worker Verification Portal</h1>
+  </header>
 
-  <!-- Search Section -->
-  <input type="text" id="searchInput" placeholder="Enter Tag ID or Name">
-  <button onclick="searchData()">Search</button>
+  <main class="container">
+    <!-- Search Section -->
+    <section class="card">
+      <h2>Search Worker</h2>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Enter Tag ID or Name">
+        <button onclick="searchData()">Search</button>
+      </div>
+    </section>
 
-  <!-- ✅ QR Scanner Section -->
-  <div id="qr-reader" style="width: 300px; margin: 20px auto;"></div>
-  <div style="text-align:center; margin-bottom:20px;">
-    <button id="startScanBtn">Start Scanner</button>
-    <button id="stopScanBtn">Stop Scanner</button>
-  </div>
+    <!-- Scanner Section -->
+    <section class="card">
+      <h2>QR Scanner</h2>
+      <div id="qr-reader"></div>
+      <div class="scan-buttons">
+        <button id="startScanBtn" class="btn-success">Start Scanner</button>
+        <button id="stopScanBtn" class="btn-danger">Stop Scanner</button>
+      </div>
+    </section>
 
-  <!-- Search Results -->
-  <div class="form-container" id="result"></div>
+    <!-- Results -->
+    <section class="card" id="result">
+      <p>No worker selected yet.</p>
+    </section>
+  </main>
 
-  <!-- ✅ Libraries (load order is important) -->
+  <!-- Scripts -->
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="script.js"></script>
