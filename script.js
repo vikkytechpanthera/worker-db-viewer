@@ -26,19 +26,10 @@ async function searchData() {
 
     // ✅ Helper for Google Drive links
     const getDriveDirectLink = (url, type = "view") => {
-  if (!url) return "";
-  
-  // Match the Google Drive File ID
-  const match = url.match(/[-\w]{25,}/);
-  
-  if (match) {
-    return `https://drive.google.com/uc?export=${type}&id=${match[0]}`;
-  }
-  
-  // If it's already a direct link, just return it
-  return url;
-};
-
+      if (!url) return "";
+      const match = url.match(/[-\w]{25,}/);
+      return match ? `https://drive.google.com/uc?export=${type}&id=${match[0]}` : url;
+    };
 
     const resultDiv = document.getElementById('result');
     if (worker) {
@@ -51,36 +42,38 @@ async function searchData() {
 
       resultDiv.innerHTML = `
         <div class="profile-card">
-            <div class="profile-info">
-                <div class="form-field"><label>Tag ID:</label> ${tagID}</div>
-                <div class="form-field"><label>Surname:</label> ${getValue("Surname")}</div>
-                <div class="form-field"><label>First Name:</label> ${getValue("First name")}</div>
-                <div class="form-field"><label>Middle Name:</label> ${getValue("Middle name")}</div>
-                <div class="form-field"><label>Phone:</label> ${getValue("Phone number")}</div>
-                <div class="form-field"><label>Address:</label> ${getValue("Address")}</div>
-                <div class="form-field"><label>NIN:</label> ${getValue("NIN")}</div>
-                <div class="form-field"><label>State of Origin:</label> ${getValue("State of origin")}</div>
-                <div class="form-field"><label>Date of Birth:</label> ${getValue("Date of birth")}</div>
-                <div class="form-field"><label>Work Category:</label> ${getValue("Work category")}</div>
-                <div class="form-field"><label>Site Allocation:</label> ${getValue("Site Allocation")}</div>
-                <div class="form-field"><label>Reference Person:</label> ${getValue("Reference person name")} (${getValue("Reference person number")})</div>
-                <div class="form-field"><label>Next of Kin:</label> ${getValue("Next of kin")} - ${getValue("Next of kin’s contact")} (${getValue("Next of kin’s relationship")})</div>
-                <div class="form-field"><label>Workmen on Site:</label> ${getValue("Numbers of workmen on site")}</div>
-            </div>
-            <div class="media">
-                <img src="${getDriveDirectLink(getValue("Upload Your Passport Photograph"), 'view')}" 
-                    alt="Passport Photo" width="120">
-                <br>
-                <a href="${getDriveDirectLink(getValue("NIN PDF Link"), 'download')}" 
+          <div class="profile-info">
+            <div class="form-field"><label>Tag ID:</label> ${tagID}</div>
+            <div class="form-field"><label>Surname:</label> ${getValue("Surname")}</div>
+            <div class="form-field"><label>First Name:</label> ${getValue("First name")}</div>
+            <div class="form-field"><label>Middle Name:</label> ${getValue("Middle name")}</div>
+            <div class="form-field"><label>Phone:</label> ${getValue("Phone number")}</div>
+            <div class="form-field"><label>Address:</label> ${getValue("Address")}</div>
+            <div class="form-field"><label>NIN:</label> ${getValue("NIN")}</div>
+            <div class="form-field"><label>State of Origin:</label> ${getValue("State of origin")}</div>
+            <div class="form-field"><label>Date of Birth:</label> ${getValue("Date of birth")}</div>
+            <div class="form-field"><label>Work Category:</label> ${getValue("Work category")}</div>
+            <div class="form-field"><label>Site Allocation:</label> ${getValue("Site Allocation")}</div>
+            <div class="form-field"><label>Reference Person:</label> ${getValue("Reference person name")} (${getValue("Reference person number")})</div>
+            <div class="form-field"><label>Next of Kin:</label> ${getValue("Next of kin")} - ${getValue("Next of kin’s contact")} (${getValue("Next of kin’s relationship")})</div>
+            <div class="form-field"><label>Workmen on Site:</label> ${getValue("Numbers of workmen on site")}</div>
+          </div>
+          <div class="media">
+            <img src="${getDriveDirectLink(getValue("Upload Your Passport Photograph"), 'view')}" 
+                alt="Passport Photo" width="120">
+            <br>
+            <a href="${getDriveDirectLink(getValue("NIN PDF Link"), 'download')}" 
                 target="_blank">View NIN PDF</a>
-                <div id="qrcode"></div>
-            </div>
+            <div id="qrcode"></div>
+          </div>
         </div>
       `;
 
-      // ✅ Generate QR code based on Tag ID (unique)
+      // ✅ Clear old QR codes before generating a new one
+      const qrDiv = document.getElementById("qrcode");
+      qrDiv.innerHTML = "";
       if (tagID) {
-        new QRCode(document.getElementById("qrcode"), {
+        new QRCode(qrDiv, {
           text: tagID,
           width: 128,
           height: 128,
@@ -95,3 +88,53 @@ async function searchData() {
     document.getElementById('result').innerHTML = "<p>Error loading data.</p>";
   }
 }
+
+/* ---------------- QR SCANNER ---------------- */
+let html5QrCode;
+
+function startScanner() {
+  if (!html5QrCode) {
+    html5QrCode = new Html5Qrcode("qr-reader");
+  }
+
+  const qrConfig = { fps: 10, qrbox: 250 };
+
+  if (html5QrCode.isScanning) {
+    console.log("Scanner already running.");
+    return;
+  }
+
+  html5QrCode.start(
+    { facingMode: "environment" },
+    qrConfig,
+    qrCodeMessage => {
+      console.log("QR Code detected:", qrCodeMessage);
+      document.getElementById("searchInput").value = qrCodeMessage;
+      searchData();
+      stopScanner(); // auto-stop after success
+    }
+  ).catch(err => {
+    console.error("Unable to start scanning:", err);
+  });
+}
+
+
+function stopScanner() {
+  if (html5QrCode && html5QrCode.isScanning) {
+    html5QrCode.stop().then(() => {
+      console.log("Scanner stopped.");
+    }).catch(err => {
+      console.error("Error stopping scanner:", err);
+    });
+  } else {
+    console.log("Scanner is not running, nothing to stop.");
+  }
+}
+
+
+// ✅ Bind buttons after DOM is fully loaded
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("startScanBtn").addEventListener("click", startScanner);
+  document.getElementById("stopScanBtn").addEventListener("click", stopScanner);
+});
+// ✅ Initial search on page load if input has value

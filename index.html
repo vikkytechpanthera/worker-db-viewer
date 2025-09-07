@@ -8,14 +8,23 @@
 <body>
   <h2>Worker / Contractor Database</h2>
 
+  <!-- Search Section -->
   <input type="text" id="searchInput" placeholder="Enter Tag ID or Name">
   <button onclick="searchData()">Search</button>
 
+  <!-- ✅ QR Scanner Section -->
+  <div id="qr-reader" style="width: 300px; margin: 20px auto;"></div>
+  <div style="text-align:center; margin-bottom:20px;">
+    <button id="startScanBtn">Start Scanner</button>
+    <button id="stopScanBtn">Stop Scanner</button>
+  </div>
+
+  <!-- Search Results -->
   <div class="form-container" id="result"></div>
 
+  <!-- ✅ Libraries (load order is important) -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="script.js"></script>
-
   <script src="script.js"></script>
 </body>
 </html>

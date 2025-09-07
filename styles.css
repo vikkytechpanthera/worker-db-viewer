@@ -1,70 +1,69 @@
+/* General */
 body { 
-  font-family: Arial, sans-serif; 
-  background: #f4f4f9; 
+  font-family: 'Poppins', Arial, sans-serif; 
+  background: #f4f6fa; 
   padding: 20px; 
+  margin: 0;
+  color: #333;
 }
 
 h2 {
   text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #222;
 }
 
-.form-container { 
-  max-width: 700px; 
-  margin: 20px auto; 
-  background: #fff; 
-  padding: 20px; 
-  border-radius: 10px; 
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+/* Search Input & Button */
+#searchInput {
+  width: 280px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-right: 8px;
 }
 
-.form-field { 
-  margin-bottom: 15px; 
-}
-
-label { 
-  font-weight: bold; 
-  display: block; 
-  margin-bottom: 5px; 
-}
-
-input { 
-  width: 300px; 
-  padding: 8px; 
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-}
-
-button { 
-  padding: 8px 16px; 
-  margin-left: 10px;
-  background-color: #007bff; 
-  color: #fff; 
-  border: none; 
-  border-radius: 5px; 
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s ease-in-out;
 }
 
-button:hover { 
-  background-color: #0056b3; 
+button:hover {
+  opacity: 0.9;
 }
 
-img { 
-  max-width: 150px; 
-  margin-top: 10px; 
-  border-radius: 5px;
+#startScanBtn {
+  background-color: #28a745;
+  color: #fff;
 }
 
-.media { 
-  margin-top: 20px; 
+#stopScanBtn {
+  background-color: #dc3545;
+  color: #fff;
 }
 
+/* Scanner Box */
+#qr-reader {
+  border: 2px solid #007bff;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px;
+  margin: 20px auto;
+  max-width: 320px;
+}
+
+/* Profile Card */
 .profile-card {
-  max-width: 800px;
+  max-width: 900px;
   margin: 20px auto;
   background: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
@@ -78,15 +77,17 @@ img {
 
 .profile-info .form-field {
   background: #f9f9f9;
-  padding: 10px;
+  padding: 12px;
   border-radius: 6px;
   border: 1px solid #eee;
 }
 
 .profile-info label {
   font-weight: bold;
-  color: #333;
-  font-size: 0.9rem;
+  color: #444;
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .media {
@@ -106,4 +107,8 @@ img {
   text-decoration: none;
   color: #007bff;
   font-weight: bold;
+}
+
+#qrcode {
+  margin-top: 15px;
 }
