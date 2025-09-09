@@ -49,7 +49,7 @@ async function searchData() {
             <div class="form-field"><label>Middle Name:</label> ${getValue("Middle name")}</div>
             <div class="form-field"><label>Phone:</label> ${getValue("Phone number")}</div>
             <div class="form-field"><label>Address:</label> ${getValue("Address")}</div>
-            <div class="form-field"><label>NIN:</label> ${getValue("NIN")}</div>
+            <div class="form-field"><label>NIN:</label> ${getValue("NIN/PASSPORT ID")}</div>
             <div class="form-field"><label>State of Origin:</label> ${getValue("State of origin")}</div>
             <div class="form-field"><label>Date of Birth:</label> ${getValue("Date of birth")}</div>
             <div class="form-field"><label>Work Category:</label> ${getValue("Work category")}</div>
@@ -62,7 +62,7 @@ async function searchData() {
             <img src="${getDriveDirectLink(getValue("Upload Your Passport Photograph"), 'view')}" 
                 alt="Passport Photo" width="120">
             <br>
-            <a href="${getDriveDirectLink(getValue("NIN PDF Link"), 'download')}" 
+            <a href="${getDriveDirectLink(getValue("Upload Your NIN/PASSPORT Card/Slip"), 'download')}" 
                 target="_blank">View NIN PDF</a>
             <div id="qrcode"></div>
           </div>
