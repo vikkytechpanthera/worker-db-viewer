@@ -120,6 +120,7 @@ button:not(.btn-success):not(.btn-danger) {
 
 #qrcode {
   margin-top: 10px;
+  text-align: center;
 }
 
 /* Mobile */
