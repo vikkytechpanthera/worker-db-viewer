@@ -18,7 +18,7 @@
     <section class="card">
       <h2>Search Worker</h2>
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Enter Tag ID or Name">
+        <input type="text" id="searchInput" placeholder="Enter Tag ID:0001 or Name">
         <button onclick="searchData()">Search</button>
       </div>
     </section>
@@ -38,6 +38,11 @@
       <p>No worker selected yet.</p>
     </section>
   </main>
+
+  <!-- Loader (Overlay) -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
 
   <!-- Scripts -->
   <script src="https://unpkg.com/html5-qrcode"></script>
