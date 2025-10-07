@@ -123,8 +123,8 @@ button:not(.btn-success):not(.btn-danger) {
 
 #qrcode {
   margin-top: 10px;
-  margin-left: 130px;
-  margin-right: 130px;
+  margin-left: 100px;
+  
   align-self: center;
 }
 
